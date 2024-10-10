@@ -1,6 +1,7 @@
 package org.jsp.emp.entity;
 
 import org.jsp.emp.util.EducationStatus;
+import org.jsp.emp.util.HighestQualification;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,15 +21,14 @@ public class Education
 	private String universityName;
 	private double percentage;
 	private int completionYear;
-	private String highestQualification;
+	private HighestQualification highestQualification;
 	
 	@ManyToOne
 	private Employee employee;
 
-	public void setStatus(EducationStatus inActive) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+
+	
 
 	
 }

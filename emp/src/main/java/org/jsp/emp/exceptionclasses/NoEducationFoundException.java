@@ -1,6 +1,9 @@
 package org.jsp.emp.exceptionclasses;
 
+import lombok.Builder;
 import lombok.NoArgsConstructor;
+
+@Builder
 
 @NoArgsConstructor
 public class NoEducationFoundException extends RuntimeException

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,60 +23,46 @@ import org.springframework.web.bind.annotation.RestController;
 public class EducationController 
 {
 	@Autowired
-	private EducationService service;
+	private EducationService edservice;
 	
-	@PostMapping
-	public ResponseEntity<?> saveEducation(@RequestBody Education education) //structure returning thats why we are using this
-	{		 
-		return service.saveEducation(education);
-	}
-	
-	@GetMapping
-	public ResponseStructure<List<Education>> findAllEducations()
+	@GetMapping("{eid}")
+	public ResponseEntity<ResponseStructure<?>> findAllEducations(@PathVariable int eid)
 	{
-		 return service.findAllEducations();
+		 return edservice.findAllEducations(eid);
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseStructure<Education> findEducationsById(@PathVariable int id)//Object Changing
+	@GetMapping("/{eid}/{edid}")
+	public ResponseEntity<ResponseStructure<?>> findEducationsById(@PathVariable int eid,@PathVariable int edid)//Object Changing
 	{
 		
-		return service.findEducationById(id);
+		return edservice.findEducationById(eid,edid);
 	}
 	
-	@GetMapping("/name/{name}")
-	public ResponseStructure<List<Education>> findEducationByName(@PathVariable String name)
+	@PostMapping("{eid}")
+	public ResponseEntity<ResponseStructure<?>> saveEducation(@PathVariable int eid,@RequestBody Education education) //structure returning thats why we are using this
+	{		 
+		return edservice.saveEducation(eid,education);
+	}
+
+	
+	
+	@DeleteMapping("/{eid}/{edid}")
+	public ResponseEntity<ResponseStructure<?>>deleteEducationById(@PathVariable int eid,@PathVariable int edid)
 	{
-		return service.findEducationByName(name);
+		return edservice.deleteEducationById(eid,edid);
 	}
 	
-	@GetMapping("/{email}/{password}")
-	public ResponseStructure<Education> findEducationByEmailAndPassword(@PathVariable String email, @PathVariable String password)
+	@PutMapping("/{eid}/{edid}")
+	public ResponseEntity<ResponseStructure<?>> updateEducation(@PathVariable int eid,@PathVariable int edid,@RequestBody Education education) 
 	{
-		return service.findEducationByEmailAndPassword(email, password);
+		 return edservice.updateEducation(eid,edid,education); 
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseStructure<String> deleteEducationById(@PathVariable int id)
+	@PatchMapping("/active/{eid}/{edid}")
+	public ResponseEntity<ResponseStructure<?>> setEducationHighQualification(@PathVariable int eid,@PathVariable int edid,@RequestParam String qualification)
 	{
-		return service.deleteEducationById(id);
+		return edservice.setEducationHighQualification(eid,edid,qualification);
 	}
 	
-	@PutMapping
-	public ResponseEntity<?> updateEducation(@RequestBody Education education) 
-	{
-		 return service.updateEducation(education); 
-	}
 	
-	@PatchMapping("/active/{id}")
-	public ResponseStructure<Education> setEducationStatusToActive(@PathVariable int id)
-	{
-		return service.setEducationStatusToActive(id);
-	}
-	
-	@PatchMapping("/inactive/{id}")
-	public ResponseStructure<Education> setEducationStatusToInActive(@PathVariable int id)
-	{
-		return service.setEducationStatusToInActive(id);
-	}
 }

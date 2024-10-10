@@ -24,35 +24,50 @@ public class EducationDao
 		return repository.save(education);
 	}
 
-	public Optional<Education> findEducationById(int id)
-	{
-		return repository.findById(id);
-	}
-	
-	public List<Education> findAllEducations()
-	{
-		return repository.findAll();
+	public List<Education> findAllEducationsById(int eid) {
+		// TODO Auto-generated method stub
+		return repository.findAllEducationsByEid(eid);
 	}
 
-	public List<Education> findAllActiveEducations() 
-	{
-		return repository.findAllActiveEducations();
+	public Optional<Education> findEducationById(int eid,int edid) {
+		// TODO Auto-generated method stub
+		return repository.findEducationById(eid,edid);
 	}
 
-	public void deleteEducationById(int id) 
-	{
-		repository.deleteById(id);
+	public void deleteEducationById(int eid, int edid) {
+		// TODO Auto-generated method stub
+		repository.deleteEducationById(eid, edid);
 	}
 
-	public Optional<Education> findEducationByEmailAndPassword(String email, String password) 
-	{
-		return repository.findByEmailAndPassword(email,password);
-	}
-
-	public List<Education> findEducationByName(String name) 
-	{
-		return repository.findByName(name);
-	}
+//	public Optional<Education> findEducationById(int id)
+//	{
+//		return repository.findById(id);
+//	}
+//	
+//	public List<Education> findAllEducations()
+//	{
+//		return repository.findAll();
+//	}
+//
+//	public List<Education> findAllActiveEducations() 
+//	{
+//		return repository.findAllActiveEducations();
+//	}
+//
+//	public void deleteEducationById(int id) 
+//	{
+//		repository.deleteById(id);
+//	}
+//
+//	public Optional<Education> findEducationByEmailAndPassword(String email, String password) 
+//	{
+//		return repository.findByEmailAndPassword(email,password);
+//	}
+//
+//	public List<Education> findEducationByName(String name) 
+//	{
+//		return repository.findByName(name);
+//	}
 
 	
 
