@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.jsp.emp.dao.EmployeeDao;
 import org.jsp.emp.entity.Employee;
 import org.jsp.emp.exceptionclasses.InvalidCredentialsException;
-import org.jsp.emp.exceptionclasses.InvalidEmployeeIdException;
 import org.jsp.emp.exceptionclasses.NoActiveEmployeeFoundException;
 import org.jsp.emp.exceptionclasses.NoEmployeeFoundException;
 import org.jsp.emp.responsestructure.ResponseStructure;
@@ -47,7 +46,7 @@ public class EmployeeService
 		
 		if(optional.isEmpty())
 		{
-			throw InvalidEmployeeIdException.builder().message("InValid Employee Id").build();
+			throw NoEmployeeFoundException.builder().message("InValid Employee Id").build();
 		}
 		Employee e = optional.get();
 		structure.setStatus(HttpStatus.OK.value());
@@ -62,16 +61,9 @@ public class EmployeeService
 		ResponseStructure<List<Employee>> structure = new ResponseStructure<>();
 		if(el.isEmpty())
 		{
-			throw new NoActiveEmployeeFoundException("No Active Employee Present In The Database Table"); //Exception Handling Layers
+			throw NoActiveEmployeeFoundException.builder().message("No Active Employee Present In The Database Table").build(); //Exception Handling Layers
 		}
-//		ArrayList<Employee> activeEmployees = new ArrayList<>();
-//		for(Employee e : el)
-//		{
-//			if(e.getStatus()==EmployeeStatus.ACTIVE)
-//			{
-//				activeEmployees.add(e);
-//			}
-//		}
+
 		
 		structure.setStatus(HttpStatus.OK.value());
 		structure.setMessage("All Employees Found Successfully");
@@ -85,7 +77,7 @@ public class EmployeeService
 		Optional<Employee> optional =  dao.findEmployeeById(id);
 		ResponseStructure<String> structure = new ResponseStructure<>(); 
 		if(optional.isEmpty())
-		  throw new InvalidEmployeeIdException("Invalid Employee Id Unable To Delete");
+		  throw NoEmployeeFoundException.builder().message("Invalid Employee Id Unable To Delete").build();
 		
 		dao.deleteEmployeeById(id);
 		structure.setStatus(HttpStatus.OK.value());
@@ -116,7 +108,7 @@ public class EmployeeService
 		
 		List<Employee> em =  dao.findEmployeeByName(name);
 		if(em.isEmpty())
-		throw new NoEmployeeFoundException("No Matching Employees Found For The Requested Name");
+		throw  NoEmployeeFoundException.builder().message("No Matching Employees Found For The Requested Name").build();
 		structure.setStatus(HttpStatus.OK.value());
 		structure.setMessage("Employees Found Successfully");
 		structure.setBody(em);
@@ -128,7 +120,7 @@ public class EmployeeService
 		Optional<Employee> optional = dao.findEmployeeById(id);
 		ResponseStructure<Employee> structure = new ResponseStructure<>();
 		if(optional.isEmpty())
-			throw new InvalidEmployeeIdException("Invalid Employee Id Unable To Set Status To Active");
+			throw NoEmployeeFoundException.builder().message("Invalid Employee Id Unable To Set Status To Active").build();
 		Employee e = optional.get();
 		e.setStatus(EmployeeStatus.ACTIVE);
 		e = dao.updateEmployee(e);
@@ -144,7 +136,7 @@ public class EmployeeService
 		Optional<Employee> optional = dao.findEmployeeById(id);
 		ResponseStructure<Employee> structure = new ResponseStructure<>();
 		if(optional.isEmpty())
-		throw new InvalidEmployeeIdException("Invalid Employee Id Unable To Set Status To In_Active");
+		throw NoEmployeeFoundException.builder().message("Invalid Employee Id Unable To Set Status To In_Active").build();
 		Employee e = optional.get();
 		e.setStatus(EmployeeStatus.IN_ACTIVE);
 		e = dao.updateEmployee(e);

@@ -2,11 +2,12 @@ package org.jsp.emp.repository;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.jsp.emp.entity.Education;
-import org.jsp.emp.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+
+import jakarta.transaction.Transactional;
 
 public interface EducationRepository extends JpaRepository<Education, Integer>
 {
@@ -15,15 +16,15 @@ public interface EducationRepository extends JpaRepository<Education, Integer>
 
 	Optional<Education> findById(int id);
 
-	List<Education> findAll();
+	@Query("select e from Education e where e.employee.id=:eid")
+	List<Education> findAllEducationsByEid(int eid);
 
-	@Query("Select e from Education e where e.status='ACTIVE'")
-	List<Education> findAllActiveEducations();
 
-	void deleteById(int id);
-
-	Optional<Education> findByEmailAndPassword(String email, String password);
-
-	List<Education> findByName(String name);
+	@Query("select e from Education e where e.employee.id=:eid and e.id=:edid")
+	Optional<Education> findEducationById(int eid, int edid);
 	
+	@Modifying
+	@Transactional
+	@Query("delete from Education e where e.employee.id=:eid and e.id=:edid")
+	void deleteEducationById(int eid, int edid);
 }

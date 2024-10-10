@@ -19,39 +19,35 @@ public class AddressDao
 		return repository.save(address);
 	}
 
-	public List<Address> findAllActiveAddress() 
-	{
-		return repository.findAll();
-	}
 
-	public Optional<Address> findAddressById(int id) 
+
+	public Optional<Address> findAddressById(int eid,int aid) 
 	{
-		return repository.findById(id);
+		return repository.findAddressById(eid,aid);
 	}
 	
-	public List<Address> findAllAddresses()
+	public List<Address> findAllAddresses(int eid)
 	{
-		return repository.findAll();
+		return repository.findAllAddressByEid(eid);
 	}
 
-	public List<Address> findAddressByName(String streetAddress) 
-	{
-		return repository.findByStreetAddress(streetAddress);
-	}
 
-//	public Optional<Address> findAddressByEmailAndPassword(String email, String password) 
-//	{
-//		return repository.findByEmailAndPassword(email,password);
-//	}
 
-	public void deleteAddressById(int id) 
+	public void deleteAddressById(int eid,int aid) 
 	{
-		repository.deleteById(id);
+		repository.deleteAddressById(eid,aid);
 	}
 
 	public Address updateAddress(Address address) 
 	{
 		return repository.save(address);
+	}
+
+
+
+	public Optional<Address> findEmpAddressByStreetAddress(String streetAddress) {
+		
+		return repository.findEmpAddressByStreetAddress(streetAddress);
 	}
 	
 }

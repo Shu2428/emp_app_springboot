@@ -3,7 +3,6 @@ package org.jsp.emp.exceptionhandler;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import org.jsp.emp.exceptionclasses.InvalidCredentialsException;
-import org.jsp.emp.exceptionclasses.InvalidEmployeeIdException;
 import org.jsp.emp.exceptionclasses.NoActiveEmployeeFoundException;
 import org.jsp.emp.exceptionclasses.NoEmployeeFoundException;
 import org.jsp.emp.responsestructure.ResponseStructure;
@@ -22,18 +21,10 @@ public class EmployeeExceptionHandler
 		structure.setStatus(HttpStatus.NOT_FOUND.value());
 		structure.setMessage("No Active Employee Found");
 		structure.setBody(e.getMessage());
-		return new ResponseEntity(structure, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<ResponseStructure<String>>(structure, HttpStatus.NOT_FOUND);
 	}
 	
-	@ExceptionHandler(InvalidEmployeeIdException.class)
-	public ResponseEntity<ResponseStructure<String>>  invalidEmployeeIdExceptionHandler(InvalidEmployeeIdException e)
-	{
-		ResponseStructure<String> structure = new ResponseStructure<>();
-		structure.setStatus(HttpStatus.NOT_FOUND.value());
-		structure.setMessage("Invalid Employee Id");
-		structure.setBody(e.getMessage());
-		return new ResponseEntity(structure, HttpStatus.NOT_FOUND);
-	}
+	
 	
 	@ExceptionHandler(InvalidCredentialsException.class)
 	public ResponseEntity<ResponseStructure<String>> invalidCredentialsExceptionHandler (InvalidCredentialsException e)

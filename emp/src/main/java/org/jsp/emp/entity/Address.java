@@ -1,8 +1,7 @@
 package org.jsp.emp.entity;
 
-import org.jsp.emp.util.AddressStatus;
-import org.jsp.emp.util.EmployeeStatus;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +17,9 @@ public class Address
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int doorNo;
+	@Column(unique = true)
 	private String streetAddress;
+	@Column(unique = true)
 	private String addressLine2;
 	private String city;
 	private String state;
